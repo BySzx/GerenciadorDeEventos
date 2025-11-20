@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração de Eventos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin-container">
+
+    <nav class="sidebar">
+        <h2>Gerenciador de Eventos</h2>
+        <ul>
+            <li><a href="#" data-route="dashboard">🏠 Dashboard</a></li>
+            <li><a href="#" data-route="eventos">🗓️ Eventos</a></li>
+            <li><a href="#" data-route="inscricoes">🎟️ Ingressos (Admin)</a></li>
+            <li><a href="#" data-route="participantes">👤 Participantes</a></li>
+            <li><a href="#" data-route="locais">📍 Locais</a></li>
+            <li><a href="#" data-route="categorias" class="active">🏷️ Categorias</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="app-content">
+            <h1>Bem-vindo ao Painel de Administração!</h1>
+            <p>Use a barra lateral para gerenciar Eventos, Participantes e Configurações.</p>
+        </div>
+    </main>
+</div>
+
+<script src="main.js"></script>
+<script src="styles.css"></script>
+</body>
+</html>
+<div id="categoria-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2><span id="modal-title">Criar Nova Categoria</span></h2>
+        <form id="categoria-form">
+            <input type="hidden" id="categoria-id">
+            <label for="categoria-nome">Nome:</label>
+            <input type="text" id="categoria-nome" required>
+            <button type="submit" class="btn btn-primary" id="save-btn">Salvar</button>
+        </form>
+    </div>
+</div>

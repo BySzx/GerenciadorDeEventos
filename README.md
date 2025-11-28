@@ -183,3 +183,182 @@ ALTER TABLE `inscricoes`
 ```
 
 ---
+# ✅ Testes para executar no Postman
+
+> Base URL: `http://localhost:8080/`
+
+---
+
+## 1) CATEGORIAS
+
+### Create Category
+
+* Método: `POST /categorias`
+* Body (JSON):
+
+```json
+{
+  "nome": "Workshops"
+}
+```
+
+* Esperado: `201 Created` (ou `200`)
+* Checar: resposta possui `id` e `nome`.
+
+### List Categories
+
+* `GET /categorias`
+* Esperado: `200` e um array com a categoria criada.
+
+---
+
+## 2) LOCAIS
+
+### Create Local
+
+* `POST /locais`
+* Body:
+
+```json
+{
+  "nome": "Auditório Central",
+  "endereco": "Rua das Flores, 123",
+  "capacidade": 200
+}
+```
+
+* Esperado: `201` com `id`.
+
+### List Locals
+
+* `GET /locais` → `200` e array.
+
+---
+
+## 3) PARTICIPANTES
+
+### Create Participant (válido)
+
+* `POST /participantes`
+* Body:
+
+```json
+{
+  "nome": "Alexandre",
+  "email": "alex@example.com",
+  "cpf": "12345678901",
+  "dataNascimento": "1995-01-01",
+  "genero": "MASCULINO",
+  "telefone": "44999999999"
+}
+```
+
+* Esperado: `201` com `id`.
+
+### Validation test (erro)
+
+* `POST /participantes` com body sem `email`:
+
+```json
+{
+  "nome": "Sem Email",
+  "cpf": "22222222222",
+  "dataNascimento": "1990-01-01",
+  "genero": "FEMININO"
+}
+```
+
+* Esperado: `400 Bad Request` com JSON de erros por campo.
+
+---
+
+## 4) EVENTOS (usa ids de categoria e local)
+
+### Create Event
+
+* `POST /eventos`
+* Body exemplo (substituir `categoria.id` e `local.id` pelos ids criados):
+
+```json
+{
+  "nome": "Workshop de Spring",
+  "descricao": "Introdução ao Spring Boot",
+  "dataHora": "2025-12-10T14:00:00",
+  "categoria": { "id": 1 },
+  "local": { "id": 1 }
+}
+```
+
+* Esperado: `201` com `id`.
+
+### List Events
+
+* `GET /eventos` → `200` array.
+
+### Get Event by ID
+
+* `GET /eventos/{id}` → `200` com o objeto do evento.
+
+### Update Event
+
+* `PUT /eventos/{id}`
+* Body (ex: atualiza `nome` e `dataHora`):
+
+```json
+{
+  "nome": "Workshop Spring - Atualizado",
+  "descricao": "Conteúdo atualizado",
+  "dataHora": "2025-12-11T14:00:00",
+  "categoria": { "id": 1 },
+  "local": { "id": 1 }
+}
+```
+
+* Esperado: `200` com evento atualizado.
+
+### Delete Event
+
+* `DELETE /eventos/{id}` → `204 No Content` (ou `200`) e em seguida `GET /eventos/{id}` → `404`.
+
+---
+
+## 5) INSCRIÇÕES
+
+* Cria inscrição vinculando participante e evento:
+
+### Create Inscricao
+
+* `POST /inscricoes`
+* Body:
+
+```json
+{
+  "participante": { "id": 1 },
+  "evento": { "id": 1 }
+}
+```
+
+* Esperado: `201` com `id`, `codigoIngresso`, `status` (PENDENTE), `dataInscricao`.
+
+### List Inscricoes
+
+* `GET /inscricoes` → `200`.
+
+### Update Inscricao (status)
+
+* `PUT /inscricoes/{id}`
+* Body para confirmar:
+
+```json
+{
+  "status": "CONFIRMADO"
+}
+```
+
+* Esperado: `200` com `status` atualizado.
+
+### Delete Inscricao
+
+* `DELETE /inscricoes/{id}` → `204` e `GET` deve retornar `404`.
+
+---

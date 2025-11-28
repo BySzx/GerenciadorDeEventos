@@ -185,7 +185,7 @@ ALTER TABLE `inscricoes`
 ---
 # ✅ Testes para executar no Postman
 
-> Base URL: `http://localhost:8080/`
+> Base URL: `http://localhost:8080/api/`
 
 ---
 
